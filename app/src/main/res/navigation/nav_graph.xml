@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:xmls="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/LoginFramgnet"
+    xmls:tools="http://schemas.android.com/tools">
+
+    <fragment
+        android:id="@+id/LoginFramgnet"
+        android:name="com.example.appenglish.Presentation.Ui.Auth.LoginFragment"
+        android:label="fragment_login">
+        <action
+            android:id="@+id/action_LoginFramgnet_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+        <action
+            android:id="@+id/action_LoginFramgnet_to_ResetPasswordFragment"
+            app:destination="@id/ResetPasswordFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="com.example.appenglish.Presentation.Ui.Auth.SignUpFragment"
+        android:label="fragment_register">
+        <action
+            android:id="@+id/action_RegisterFragment_to_LoginFramgnet"
+            app:destination="@id/LoginFramgnet" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ResetPasswordFragment"
+        android:name="com.example.appenglish.Presentation.Ui.Auth.ResetPasswordFragment"
+        android:label="fragment_reset_password">
+
+        <action
+            android:id="@+id/action_ResetPasswordFragment_to_LoginFramgnet"
+            app:destination="@id/LoginFramgnet" />
+    </fragment>
+
+</navigation>

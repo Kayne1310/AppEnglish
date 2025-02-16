@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("dagger.hilt.android.plugin")
 }
 
 android {
     namespace = "com.example.appenglish"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.appenglish"
@@ -40,4 +41,32 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    //navigate fragment
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
+
+
+    implementation ("com.google.dagger:hilt-android:2.51")
+    annotationProcessor ("com.google.dagger:hilt-compiler:2.51")
+
+    // Retrofit + OkHttp
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    // ViewModel & LiveData (MVVM)
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+
+    //Lottie
+    implementation ("com.airbnb.android:lottie:6.1.0")
+
+    //google
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
 }

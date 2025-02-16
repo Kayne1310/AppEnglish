@@ -14,6 +14,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:drawableLeft="@drawable/facebook"
+        android:drawableRight="@drawable/outline_favorite_border_24"
+        android:fontFamily="@font/font"
+        android:textStyle="italic" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
