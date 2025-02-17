@@ -1,10 +1,8 @@
 package com.example.appenglish.Infrastructure.Repository;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -14,9 +12,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.appenglish.Application.Local.SharedPreferencesHelper;
 import com.example.appenglish.Application.Remote.AuthApi;
 import com.example.appenglish.Domain.Model.LoginRequest;
+import com.example.appenglish.Domain.Model.ReturnData;
+import com.example.appenglish.Domain.Model.UserLoginRequest;
 import com.example.appenglish.Infrastructure.IRepository.IAuthRepository;
-import com.example.appenglish.MainActivity;
-import com.example.appenglish.Presentation.Ui.Auth.AuthActivity;
+import com.example.appenglish.Presentation.Ui.Main.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -65,12 +64,10 @@ public class AuthRepository implements IAuthRepository {
                         sharedPreferencesHelper.saveToken(response.body().getToken());
                         loginResponse.setValue(response.body());
 
-
                     } else if (response.body().getReturnCode().equals("-1")) {
                         // Xử lý khi đăng nhập thất bại
                         loginResponse.setValue(null);
                     }
-
                 }
             }
 
@@ -80,6 +77,27 @@ public class AuthRepository implements IAuthRepository {
             }
         });
         return loginResponse;
+    }
+
+    //
+    @Override
+    public LiveData<ReturnData> singup(UserLoginRequest userLoginRequest) {
+        MutableLiveData<ReturnData> signupResponse = new MutableLiveData<>();
+        authApi.singup(userLoginRequest).enqueue(new Callback<ReturnData>() {
+            @Override
+            public void onResponse(Call<ReturnData> call, Response<ReturnData> response) {
+                if (response.isSuccessful()) {
+                    signupResponse.setValue(response.body());
+                    Log.i("dâta", response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReturnData> call, Throwable t) {
+                signupResponse.setValue(null);
+            }
+        });
+        return signupResponse;
     }
 
 
@@ -124,7 +142,63 @@ public class AuthRepository implements IAuthRepository {
                 t.printStackTrace();
             }
         });
+
+        //Register account google
+
+
     }
+
+
+        //singup
+
+    public LiveData<ReturnData> signUpWithGoogle(GoogleSignInAccount account) {
+        String idToken = account.getId();
+        String email = account.getEmail();
+        String name = account.getDisplayName();
+        String pictureUrl = (account.getPhotoUrl() != null) ? account.getPhotoUrl().toString() : null;
+
+        // Gửi lên API backend
+        JsonObject json = new JsonObject();
+        json.addProperty("name", name);
+        json.addProperty("email", email);
+        json.addProperty("googleId", idToken);
+        json.addProperty("pictureUrl", pictureUrl);
+
+        MutableLiveData<ReturnData> signupResponse = new MutableLiveData<>();
+
+        authApi.singUpWithGoogle(json).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call< JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()&&response.body()!=null) {
+
+                    // Convert JsonObject to LoginRequest.ReturnData
+                    ReturnData returnData = new ReturnData();
+                    returnData.setReturnCode(response.body().get("returnCode").getAsString());
+                    returnData.setReturnMessage(response.body().get("returnMessage").getAsString());
+                    // Set the converted object to signupResponse
+                    signupResponse.setValue(returnData);
+
+
+                } else {
+                    // Xử lý lỗi
+                    Toast.makeText(context, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                t.printStackTrace();
+            }
+
+
+        });
+        return  signupResponse ;
+
+        //Register account google
+
+
+    }
+
 
 
     public Intent getGoogleSignInIntent() {

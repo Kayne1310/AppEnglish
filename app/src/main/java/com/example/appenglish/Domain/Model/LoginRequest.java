@@ -30,26 +30,7 @@ public class LoginRequest {
 
 
 
-    public class ReturnData{
-        private String returnCode;
-        private String returnMessage;
 
-        public String getReturnCode() {
-            return returnCode;
-        }
-
-        public void setReturnCode(String returnCode) {
-            this.returnCode = returnCode;
-        }
-
-        public String getReturnMessage() {
-            return returnMessage;
-        }
-
-        public void setReturnMessage(String returnMessage) {
-            this.returnMessage = returnMessage;
-        }
-    }
 
     public class LoginResponse  extends ReturnData{
         private String token;  // Giả sử API trả về token sau khi đăng nhập thành công

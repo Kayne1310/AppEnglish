@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homemenu"
+        android:title="Home" />
+    <item
+        android:id="@+id/flashCardMenu"
+        android:title="Flash Card" />
+
+    <item
+        android:id="@+id/examMenu"
+        android:title="Exam" />
+    <item
+        android:id="@+id/questionMenu"
+        android:title="Question" />
+    <item
+        android:id="@+id/profileMenu"
+        android:title="Profile" />
+
+</menu>

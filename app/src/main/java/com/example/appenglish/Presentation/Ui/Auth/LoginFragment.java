@@ -2,31 +2,28 @@ package com.example.appenglish.Presentation.Ui.Auth;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.appenglish.Domain.Model.LoginRequest;
 import com.example.appenglish.Domain.ViewModel.AuthViewModel;
-import com.example.appenglish.MainActivity;
+import com.example.appenglish.Presentation.Ui.Main.MainActivity;
 import com.example.appenglish.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
@@ -82,23 +79,24 @@ public class LoginFragment extends BaseFragment {
                 return;
             }
             showLoading();
-//            lottieAnimationView.setVisibility(View.VISIBLE);
-//            lottieAnimationView.playAnimation();
                 authViewModel.login(new LoginRequest(emailText, passwordText)).observe(getViewLifecycleOwner(), loginResponse -> {
-//                lottieAnimationView.cancelAnimation(); // Dừng hiệu ứng
-//                lottieAnimationView.setVisibility(View.GONE);
-                hideLoadingWithDelay(1000);
-                if (loginResponse != null) {
-                    //save token
-                    Toast.makeText(getActivity(), "Login Successuly !", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                    //navigate to home
-                } else {
-                    //show error\
-                    Toast.makeText(getActivity(), "Login Failed !", Toast.LENGTH_SHORT).show();
-                }
+
+                new Handler(Looper.getMainLooper()).postDelayed(()->{
+                    if (loginResponse != null) {
+                        //save token
+                        Toast.makeText(getActivity(), "Login Successuly !", Toast.LENGTH_SHORT).show();
+                        hideLoadingWithDelay(1);
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        //navigate to home
+                    } else {
+                        hideLoadingWithDelay(1);
+                        //show error\
+                        Toast.makeText(getActivity(), "Login Failed !", Toast.LENGTH_SHORT).show();
+                    }
+
+                },2000);
             });
             //call login api
         });

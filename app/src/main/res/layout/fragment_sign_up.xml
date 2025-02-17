@@ -78,6 +78,7 @@
             app:boxStrokeColor="#A3B5CA">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/baseline_person_24"
@@ -108,6 +109,7 @@
             app:boxStrokeColor="#A3B5CA">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtEmailSingup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/outline_email_24"
@@ -142,6 +144,7 @@
             app:startIconDrawable="@drawable/outline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtPasswordSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/plusjakartasans"
@@ -279,6 +282,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/btnGoogleSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
